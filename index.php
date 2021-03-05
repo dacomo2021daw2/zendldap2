@@ -3,7 +3,7 @@
     use Laminas\Ldap\Attribute;
 	use Laminas\Ldap\Ldap;
 
-	#ini_set('display_errors', 0);
+	ini_set('display_errors', 0);
 	#Dades de la nova entrada
 	#
 	$uid='usr3';
@@ -20,6 +20,7 @@
 	$telefon='934445566';
 	$titol='analista';
 	$descripcio='analista de sistemes';
+	$objcl=array('inetOrgPerson','organizationalPerson','person','posixAccount','shadowAccount','top');
 	#
 	#Afegint la nova entrada
 	$domini = 'dc=fjeclot,dc=net';
@@ -34,12 +35,7 @@
 	$ldap = new Ldap($opcions);
 	$ldap->bind();
 	$nova_entrada = [];
-	Attribute::setAttribute($nova_entrada, 'objectClass[0]', 'inetOrgPerson');
-	Attribute::setAttribute($nova_entrada, 'objectClass[1]', 'organizationalPerson');
-	Attribute::setAttribute($nova_entrada, 'objectClass[2]', 'person');
-	Attribute::setAttribute($nova_entrada, 'objectClass[3]', 'posixAccount');
-	Attribute::setAttribute($nova_entrada, 'objectClass[4]', 'shadowAccount');
-	Attribute::setAttribute($nova_entrada, 'objectClass[5]', 'top');
+	Attribute::setAttribute($nova_entrada, 'objectClass', $objcl);
 	Attribute::setAttribute($nova_entrada, 'uid', $uid);
 	Attribute::setAttribute($nova_entrada, 'uidNumber', $num_id);
 	Attribute::setAttribute($nova_entrada, 'gidNumber', $grup);
@@ -54,5 +50,5 @@
 	Attribute::setAttribute($nova_entrada, 'title', $titol);
 	Attribute::setAttribute($nova_entrada, 'description', $descripcio);
 	$dn = 'uid='.$uid.',ou='.$unorg.',dc=fjeclot,dc=net';
-	$ldap->add($dn, $nova_entrada);	
+	if($ldap->add($dn, $nova_entrada)) echo "Usuari creat";	
 ?>
