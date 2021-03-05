@@ -3,7 +3,7 @@
     use Laminas\Ldap\Attribute;
 	use Laminas\Ldap\Ldap;
 
-	#ini_set('display_errors', 0);
+	ini_set('display_errors', 0);
 	if ($_POST['uid'] && $_POST['unorg']){
 	   $domini = 'dc=fjeclot,dc=net';
 	   $opcions = [
